@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <style>
+        table {
+            width: 100%;
+            background: white;
+            color: black;
+            border-spacing: 2px;
+        }
+
+        td, th {
+            background: white;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<table border="1">
+    <thead>
+    <tr>
+        <td>id</td>
+        <td>Name</td>
+        <td>Lastname</td>
+        <td>Username</td>
+        <td>Password</td>
+        <td>Roles</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td><a th:href="@{/admin/users/{id}(id = ${user.getId()})}" th:text="${user.getId()}"></a></td>
+        <td th:text="${user.getName()}"></td>
+        <td th:text="${user.getLastname()}"></td>
+        <td th:text="${user.getUsername()}"></td>
+        <td th:text="${user.getPassword()}"></td>
+        <td>
+            <th:block th:each="rol : ${user.getRoles()}" th:text="${rol.getName() + ' ' }"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/admin/users/new}">Add new User</a>
+<br/>
+<br/>
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Logout</button>
+</form>
+</body>
+</html>
